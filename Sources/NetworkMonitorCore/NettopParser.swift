@@ -108,6 +108,7 @@ public struct NettopParser {
     /// Discards the priming sample, whose values are cumulative rather than deltas.
     private var sawFirstSample = false
     private var pending: [NettopRow] = []
+    private var noMachineSockets: [Connection] = []
     private var buffer = ""
     /// Whether rows carry an `interface` column before their counters, as the
     /// header says (`time,,interface,bytes_in,bytes_out,`).
@@ -142,7 +143,10 @@ public struct NettopParser {
                 foldConnection(connection)
                 continue
             }
-            if let row = Self.parseRow(line, interfaceColumn: interfaceColumn) { pending.append(row) }
+            if let row = Self.parseRow(line, interfaceColumn: interfaceColumn) {
+                finishNoMachinePlayer()
+                pending.append(row)
+            }
         }
         return samples
     }
@@ -151,6 +155,7 @@ public struct NettopParser {
     /// they stayed on the LAN, and to its servers if they crossed the internet.
     private mutating func foldConnection(_ connection: Connection) {
         guard let index = pending.indices.last else { return }
+        if pending[index].processName == "nxplayer" { noMachineSockets.append(connection) }
         if let interface = connection.interface {
             if Self.isTunnel(interface), !connection.scope.isLocal {
                 pending[index].tunnels[interface, default: ByteCounts(bytesIn: 0, bytesOut: 0)]
@@ -173,19 +178,53 @@ public struct NettopParser {
             }
             return
         }
+        addLocalBytes(inbound: connection.bytesIn, outbound: connection.bytesOut,
+                      subtractable: connection.scope.isSubtractable, to: index)
+    }
+
+    /// NoMachine negotiates its UDP media channel over the session's TCP link.
+    /// The player leaves its UDP socket unconnected, so nettop has no peer to
+    /// classify. Use the default NX session only when both sockets are on the
+    /// same physical interface and the process has no other unknown or internet
+    /// socket. A player doing discovery or making an internet connection keeps
+    /// its unclassified bytes.
+    private mutating func finishNoMachinePlayer() {
+        guard !noMachineSockets.isEmpty, let index = pending.indices.last else { return }
+        defer { noMachineSockets.removeAll(keepingCapacity: true) }
+        let tcp = noMachineSockets.filter { $0.label.hasPrefix("tcp") && $0.ports != nil }
+        let unclassifiedOrInternet = noMachineSockets.filter { !$0.scope.isLocal }
+        guard tcp.count == 1, let control = tcp.first, control.scope == .localUnicast,
+              control.ports?.remote == 4000,
+              let interface = control.interface,
+              interface.hasPrefix("en"), Int(interface.dropFirst(2)) != nil,
+              unclassifiedOrInternet.count == 1, let media = unclassifiedOrInternet.first,
+              media.interface == interface else { return }
+
+        let isIPv6 = control.label.hasPrefix("tcp6 ")
+        let wildcard = isIPv6 ? "*.*" : "*:*"
+        guard let separator = media.label.range(of: "<->"),
+              media.label.hasPrefix(isIPv6 ? "udp6 *." : "udp4 *:"),
+              media.label[separator.upperBound...] == wildcard,
+              let port = RemoteEndpoint.port(of: String(media.label[..<separator.lowerBound]), isIPv6: isIPv6),
+              (49152...65535).contains(port) else { return }
+
         let parent = pending[index]
-        let subtractable = connection.scope.isSubtractable
+        addLocalBytes(inbound: min(max(media.bytesIn, 0), parent.internetBytesIn),
+                      outbound: min(max(media.bytesOut, 0), parent.internetBytesOut),
+                      subtractable: true, to: index)
+    }
+
+    private mutating func addLocalBytes(inbound: Int64, outbound: Int64, subtractable: Bool, to index: Int) {
+        let parent = pending[index]
         pending[index] = NettopRow(
             pid: parent.pid,
             processName: parent.processName,
             bytesIn: parent.bytesIn,
             bytesOut: parent.bytesOut,
-            localBytesIn: parent.localBytesIn + connection.bytesIn,
-            localBytesOut: parent.localBytesOut + connection.bytesOut,
-            subtractableLocalIn: parent.subtractableLocalIn
-                + (subtractable ? connection.bytesIn : 0),
-            subtractableLocalOut: parent.subtractableLocalOut
-                + (subtractable ? connection.bytesOut : 0),
+            localBytesIn: parent.localBytesIn + inbound,
+            localBytesOut: parent.localBytesOut + outbound,
+            subtractableLocalIn: parent.subtractableLocalIn + (subtractable ? inbound : 0),
+            subtractableLocalOut: parent.subtractableLocalOut + (subtractable ? outbound : 0),
             servers: parent.servers,
             tunnels: parent.tunnels,
             loopback: parent.loopback)
@@ -195,6 +234,7 @@ public struct NettopParser {
         let scope: TrafficScope
         let bytesIn: Int64
         let bytesOut: Int64
+        let label: String
         /// The far end's address, without its port. Nil for a wildcard peer.
         var remoteHost: String? = nil
         /// The interface the socket is on, when the stream has the column.
@@ -235,7 +275,7 @@ public struct NettopParser {
                 ports = (local, remote)
             }
         }
-        return Connection(scope: scope, bytesIn: bytesIn, bytesOut: bytesOut,
+        return Connection(scope: scope, bytesIn: bytesIn, bytesOut: bytesOut, label: label,
                           remoteHost: scope.isLocal ? nil : RemoteEndpoint.remoteHost(connectionLabel: label),
                           interface: interface?.isEmpty == false ? interface : nil, ports: ports)
     }
@@ -266,6 +306,7 @@ public struct NettopParser {
     public var hasPartialLine: Bool { !buffer.isEmpty }
 
     private mutating func closeSample() -> [NettopRow]? {
+        finishNoMachinePlayer()
         defer { pending = [] }
         guard !pending.isEmpty else { return nil }
         guard sawFirstSample else {
@@ -279,6 +320,7 @@ public struct NettopParser {
     public mutating func resetForRestart() {
         sawFirstSample = false
         pending = []
+        noMachineSockets = []
         buffer = ""
     }
 

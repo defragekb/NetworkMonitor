@@ -111,6 +111,50 @@ func runNettopParserTests() {
             Check.expectEqual(row.internetBytesOut, 100)
         }
 
+        let nxControl = "02:21:33,tcp4 192.168.1.2:58360<->192.168.1.42:4000,en0,816,648,"
+        let nxMedia = "02:21:33,udp4 *:63259<->*:*,en0,97354,286,"
+
+        func player(controls: [String] = [], media: String, name: String = "nxplayer") -> NettopRow? {
+            var parser = NettopParser()
+            let sample = [
+                "time,,interface,bytes_in,bytes_out,",
+                "02:21:32,\(name).61678,,8397274,99401,",
+                "time,,interface,bytes_in,bytes_out,",
+                "02:21:33,\(name).61678,,98170,934,",
+                media
+            ] + controls + [
+                "02:21:33,nxplayer.1398,,5,1,",
+                "02:21:33,udp4 *:61080<->*:*,en0,5,1,",
+                ""
+            ]
+            _ = parser.consume(sample.joined(separator: "\n"))
+            let rows = parser.closeOnQuiet()
+            Check.expectEqual(rows?.last?.internetBytesIn, 5, "a separate player's discovery is still internet")
+            return rows?.first
+        }
+
+        Check.test("a local NoMachine session excludes its wildcard UDP media from both totals") {
+            let row = player(controls: [nxControl], media: nxMedia)
+            Check.expectEqual(row?.internetBytesIn, 0)
+            Check.expectEqual(row?.internetBytesOut, 0)
+            Check.expectEqual(row?.subtractableLocalIn, 98170)
+            Check.expectEqual(row?.subtractableLocalOut, 934)
+        }
+
+        Check.test("a public or missing NoMachine control peer leaves all UDP media visible") {
+            let publicControl = nxControl.replacingOccurrences(of: "192.168.1.42", with: "203.0.113.42")
+            Check.expectEqual(player(controls: [publicControl], media: nxMedia)?.internetBytesIn, 98170)
+            Check.expectEqual(player(media: nxMedia)?.internetBytesIn, 98170)
+        }
+
+        Check.test("ambiguous sockets and other apps keep unknown UDP bytes") {
+            let publicControl = nxControl.replacingOccurrences(of: "192.168.1.42", with: "203.0.113.42")
+            Check.expectEqual(player(controls: [nxControl, publicControl], media: nxMedia)?.internetBytesIn, 97354)
+            let otherInterface = nxMedia.replacingOccurrences(of: ",en0,", with: ",en1,")
+            Check.expectEqual(player(controls: [nxControl], media: otherInterface)?.internetBytesIn, 97354)
+            Check.expectEqual(player(controls: [nxControl], media: nxMedia, name: "anotherApp")?.internetBytesIn, 97354)
+        }
+
         // Sockets churn mid-sample, so children can momentarily exceed the parent.
         // That must clamp, never report a negative usage figure.
         Check.test("local bytes exceeding the parent clamp to zero") {
