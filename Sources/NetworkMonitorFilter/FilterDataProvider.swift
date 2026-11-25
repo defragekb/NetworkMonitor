@@ -3,6 +3,10 @@ import FilterProtocol
 import FirewallPolicy
 import Foundation
 import NetworkExtension
+#if PRIVATE_RELAY_FLOW_PROBE
+import Network
+import os
+#endif
 
 /// Sees every new outbound connection, decides it by the person's rules
 /// (#114), and reports it to the app.
@@ -35,6 +39,40 @@ final class FilterDataProvider: NEFilterDataProvider {
     /// here, the answer is allow: a filter that fails must never cut the Mac
     /// off.
     override func handleNewFlow(_ flow: NEFilterFlow) -> NEFilterNewFlowVerdict {
+        let verdict = decideNewFlow(flow)
+#if PRIVATE_RELAY_FLOW_PROBE
+        guard #available(macOS 15, *), let socket = flow as? NEFilterSocketFlow,
+              Self.probes(socket), let observed = verdict.copy() as? NEFilterNewFlowVerdict else { return verdict }
+        observed.shouldReport = true
+        observed.statisticsReportFrequency = .low
+        return observed
+#else
+        return verdict
+#endif
+    }
+
+#if PRIVATE_RELAY_FLOW_PROBE
+    private static let flowProbe = Logger(subsystem: "com.kevinabouhanna.NetworkMonitor.Filter",
+                                          category: "PrivateRelayFlowProbe")
+
+    @available(macOS 15, *)
+    private static func probes(_ socket: NEFilterSocketFlow) -> Bool {
+        switch socket.remoteFlowEndpoint {
+        case .hostPort(_, let port): return port == .https
+        case nil: return socket.socketType == SOCK_DGRAM
+        default: return false
+        }
+    }
+
+    override func handle(_ report: NEFilterReport) {
+        guard report.event == .statistics || report.event == .flowClosed, let flow = report.flow else { return }
+        let appPID = FlowReport.pid(fromAuditToken: flow.sourceAppAuditToken)
+        let socketPID = FlowReport.pid(fromAuditToken: flow.sourceProcessAuditToken)
+        Self.flowProbe.debug("flow=\(flow.identifier.uuidString, privacy: .public) event=\(report.event.rawValue) appPID=\(appPID) socketPID=\(socketPID) rx=\(report.bytesInboundCount) tx=\(report.bytesOutboundCount)")
+    }
+#endif
+
+    private func decideNewFlow(_ flow: NEFilterFlow) -> NEFilterNewFlowVerdict {
         guard let socket = flow as? NEFilterSocketFlow,
               let remote = socket.remoteEndpoint as? NWHostEndpoint else { return .allow() }
         let port = Int(remote.port) ?? 0
