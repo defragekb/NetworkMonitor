@@ -2,6 +2,8 @@
 
 This accompanies [NetworkMonitor #799](https://github.com/kevinabouhanna/NetworkMonitor/issues/799). The [signed Safari probe runs](https://github.com/kevinabouhanna/NetworkMonitor/issues/799#issuecomment-7203512579), [controlled downloads](https://github.com/kevinabouhanna/NetworkMonitor/issues/799#issuecomment-7219703646) and [external UDP and QUIC matrix](https://github.com/kevinabouhanna/NetworkMonitor/issues/799#issuecomment-7207173291) contain the measured results. The test scripts below accept your own endpoints and contain no captured traffic or test-machine identifiers.
 
+Start with the [evidence and implementation map](evidence.md) for the investigation in order, the published captures and the one-command replay.
+
 ## Received bytes in Safari
 
 1. Enable NetworkMonitor's Content Filter. Use a signed build with `flowBytesProbe` for measurement, or the [receive accounting branch](https://github.com/defragekb/NetworkMonitor/tree/relay-download-799) to try Usage History.

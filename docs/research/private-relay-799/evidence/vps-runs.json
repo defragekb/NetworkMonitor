@@ -1,0 +1,551 @@
+{
+  "same_route": [
+    {
+      "client": "BSD UDP",
+      "size_argument": 128,
+      "receiver": {
+        "datagrams": 32,
+        "payload_bytes": 4096,
+        "app_bytes": 128
+      },
+      "filter_reports": [
+        [
+          [
+            "statistics",
+            672,
+            4096
+          ],
+          [
+            "close",
+            672,
+            4096
+          ]
+        ]
+      ],
+      "socket_rx_tx": [
+        [
+          1776,
+          3200
+        ]
+      ],
+      "nettop_all_process_rx_tx_packets_out": [
+        [
+          315,
+          2048,
+          16
+        ],
+        [
+          651,
+          4096,
+          32
+        ]
+      ]
+    },
+    {
+      "client": "Network.framework UDP",
+      "size_argument": 128,
+      "receiver": {
+        "datagrams": 32,
+        "payload_bytes": 4096,
+        "app_bytes": 128
+      },
+      "filter_reports": [
+        [
+          [
+            "statistics",
+            672,
+            64640
+          ],
+          [
+            "close",
+            672,
+            64640
+          ]
+        ]
+      ],
+      "socket_rx_tx": [
+        [
+          931,
+          3120
+        ]
+      ],
+      "nettop_all_process_rx_tx_packets_out": [
+        [
+          441,
+          1560,
+          10
+        ],
+        [
+          1225,
+          4056,
+          26
+        ]
+      ]
+    },
+    {
+      "client": "BSD UDP",
+      "size_argument": 1024,
+      "receiver": {
+        "datagrams": 32,
+        "payload_bytes": 32768,
+        "app_bytes": 1024
+      },
+      "filter_reports": [
+        [
+          [
+            "statistics",
+            672,
+            32768
+          ],
+          [
+            "close",
+            672,
+            32768
+          ]
+        ]
+      ],
+      "socket_rx_tx": [
+        [
+          1628,
+          23552
+        ]
+      ],
+      "nettop_all_process_rx_tx_packets_out": [
+        [
+          294,
+          15360,
+          15
+        ],
+        [
+          588,
+          29696,
+          29
+        ]
+      ]
+    },
+    {
+      "client": "Network.framework UDP",
+      "size_argument": 1024,
+      "receiver": {
+        "datagrams": 32,
+        "payload_bytes": 32768,
+        "app_bytes": 1024
+      },
+      "filter_reports": [
+        [
+          [
+            "statistics",
+            672,
+            64640
+          ],
+          [
+            "close",
+            672,
+            64640
+          ]
+        ]
+      ],
+      "socket_rx_tx": [
+        [
+          1176,
+          26300
+        ]
+      ],
+      "nettop_all_process_rx_tx_packets_out": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          686,
+          15780,
+          15
+        ],
+        [
+          1470,
+          32612,
+          31
+        ]
+      ]
+    },
+    {
+      "client": "Network.framework QUIC",
+      "size_argument": 65536,
+      "receiver": {
+        "datagrams": 38,
+        "payload_bytes": 8167,
+        "app_bytes": 65536
+      },
+      "filter_reports": [
+        [
+          [
+            "close",
+            70345,
+            76760
+          ]
+        ]
+      ],
+      "socket_rx_tx": [],
+      "nettop_all_process_rx_tx_packets_out": [
+        [
+          68121,
+          8107,
+          36
+        ],
+        [
+          68121,
+          8107,
+          36
+        ]
+      ]
+    },
+    {
+      "client": "OpenSSL QUIC",
+      "size_argument": 65536,
+      "receiver": {
+        "datagrams": 36,
+        "payload_bytes": 4787,
+        "app_bytes": 65536
+      },
+      "filter_reports": [
+        [
+          [
+            "close",
+            68721,
+            4787
+          ]
+        ]
+      ],
+      "socket_rx_tx": [
+        [
+          139490,
+          4787
+        ]
+      ],
+      "nettop_all_process_rx_tx_packets_out": [
+        [
+          68721,
+          4787,
+          36
+        ],
+        [
+          68721,
+          4787,
+          36
+        ]
+      ]
+    }
+  ],
+  "kernel_path_comparison": [
+    {
+      "client": "BSD UDP",
+      "size_argument": 128,
+      "receiver": {
+        "datagrams": 32,
+        "payload_bytes": 4096,
+        "app_bytes": 128
+      },
+      "filter_reports": [
+        [
+          [
+            "statistics",
+            672,
+            4096
+          ],
+          [
+            "close",
+            672,
+            4096
+          ]
+        ]
+      ],
+      "kernel_filter_tx": [
+        [
+          3072,
+          3072
+        ]
+      ],
+      "socket_rx_tx": [
+        [
+          1702,
+          3072
+        ]
+      ],
+      "nettop_all_process_rx_tx_packets_out": [
+        [
+          294,
+          1920,
+          15
+        ],
+        [
+          609,
+          3840,
+          30
+        ]
+      ]
+    },
+    {
+      "client": "Network.framework UDP",
+      "size_argument": 128,
+      "receiver": {
+        "datagrams": 32,
+        "payload_bytes": 4096,
+        "app_bytes": 128
+      },
+      "filter_reports": [
+        [
+          [
+            "statistics",
+            672,
+            64640
+          ],
+          [
+            "close",
+            672,
+            64640
+          ]
+        ]
+      ],
+      "kernel_filter_tx": [],
+      "socket_rx_tx": [
+        [
+          1127,
+          3744
+        ]
+      ],
+      "nettop_all_process_rx_tx_packets_out": [
+        [
+          735,
+          2496,
+          16
+        ],
+        [
+          1421,
+          4680,
+          30
+        ]
+      ]
+    },
+    {
+      "client": "Network.framework QUIC",
+      "size_argument": 65536,
+      "receiver": {
+        "datagrams": 40,
+        "payload_bytes": 8223,
+        "app_bytes": 65536
+      },
+      "filter_reports": [
+        [
+          [
+            "close",
+            70452,
+            80800
+          ]
+        ]
+      ],
+      "kernel_filter_tx": [],
+      "socket_rx_tx": [],
+      "nettop_all_process_rx_tx_packets_out": [
+        [
+          68164,
+          8163,
+          38
+        ],
+        [
+          68164,
+          8163,
+          38
+        ]
+      ]
+    },
+    {
+      "client": "OpenSSL QUIC",
+      "size_argument": 65536,
+      "receiver": {
+        "datagrams": 36,
+        "payload_bytes": 4787,
+        "app_bytes": 65536
+      },
+      "filter_reports": [
+        [
+          [
+            "close",
+            68721,
+            4787
+          ]
+        ]
+      ],
+      "kernel_filter_tx": [
+        [
+          4787,
+          4787
+        ]
+      ],
+      "socket_rx_tx": [
+        [
+          139490,
+          4787
+        ]
+      ],
+      "nettop_all_process_rx_tx_packets_out": [
+        [
+          68721,
+          4787,
+          36
+        ],
+        [
+          68721,
+          4787,
+          36
+        ]
+      ]
+    }
+  ],
+  "initial_matrix": [
+    {
+      "client": "UDP",
+      "size_argument": 64,
+      "receiver": {
+        "datagrams": 32,
+        "payload_bytes": 2048,
+        "app_bytes": 64
+      },
+      "filter_reports": [
+        [
+          [
+            "close",
+            672,
+            2048
+          ]
+        ]
+      ]
+    },
+    {
+      "client": "UDP",
+      "size_argument": 1024,
+      "receiver": {
+        "datagrams": 32,
+        "payload_bytes": 32768,
+        "app_bytes": 1024
+      },
+      "filter_reports": [
+        [
+          [
+            "close",
+            672,
+            32768
+          ]
+        ]
+      ]
+    },
+    {
+      "client": "Network.framework QUIC",
+      "size_argument": 4096,
+      "receiver": {
+        "datagrams": 16,
+        "payload_bytes": 7484,
+        "app_bytes": 4096
+      },
+      "filter_reports": [
+        [
+          [
+            "close",
+            7466,
+            32320
+          ]
+        ]
+      ]
+    },
+    {
+      "client": "HTTP/3",
+      "size_argument": 4096,
+      "receiver": {
+        "datagrams": 14,
+        "payload_bytes": 5382,
+        "app_bytes": 4096
+      },
+      "filter_reports": [
+        [
+          [
+            "close",
+            6029,
+            28280
+          ]
+        ]
+      ]
+    },
+    {
+      "client": "Network.framework QUIC",
+      "size_argument": 65536,
+      "receiver": {
+        "datagrams": 40,
+        "payload_bytes": 8221,
+        "app_bytes": 65536
+      },
+      "filter_reports": [
+        [
+          [
+            "close",
+            70425,
+            80800
+          ]
+        ]
+      ]
+    },
+    {
+      "client": "HTTP/3",
+      "size_argument": 65536,
+      "receiver": {
+        "datagrams": 34,
+        "payload_bytes": 6004,
+        "app_bytes": 65536
+      },
+      "filter_reports": [
+        [
+          [
+            "close",
+            68964,
+            68680
+          ]
+        ]
+      ]
+    },
+    {
+      "client": "Network.framework QUIC",
+      "size_argument": 262144,
+      "receiver": {
+        "datagrams": 72,
+        "payload_bytes": 7104,
+        "app_bytes": 262144
+      },
+      "filter_reports": [
+        [
+          [
+            "close",
+            270038,
+            145440
+          ]
+        ]
+      ]
+    },
+    {
+      "client": "HTTP/3",
+      "size_argument": 262144,
+      "receiver": {
+        "datagrams": 67,
+        "payload_bytes": 7085,
+        "app_bytes": 262144
+      },
+      "filter_reports": [
+        [
+          [
+            "close",
+            270136,
+            135340
+          ]
+        ]
+      ]
+    }
+  ]
+}

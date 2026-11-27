@@ -1,0 +1,15 @@
+relay-off-probe    interface=[2272141, 41266] nettop=[0, 0] filter=None all-nettop peak RX=116,489 CPU=0.00s/12.48s
+relay-on-probe     interface=[2264402, 49707] nettop=[0, 0] filter=[2008998, 2322] all-nettop peak RX=107,027 CPU=0.01s/12.58s
+direct-off-probe   interface=[2231642, 39818] nettop=[2008830, 6458] filter=None all-nettop peak RX=2,008,860 CPU=0.00s/12.18s
+direct-on-probe    interface=[2482774, 85407] nettop=[2008809, 5366] filter=[2008809, 2322] all-nettop peak RX=2,008,824 CPU=0.01s/12.18s
+BSD UDP                   receiver= 4,096 B filter= 4,096 B
+Network.framework UDP     receiver= 4,096 B filter=64,640 B
+BSD UDP                   receiver=32,768 B filter=32,768 B
+Network.framework UDP     receiver=32,768 B filter=64,640 B
+Network.framework QUIC    receiver= 8,167 B filter=76,760 B
+OpenSSL QUIC              receiver= 4,787 B filter= 4,787 B
+network-udp: 32 × 2020 B reserved, 4,096 B forwarded
+held-quic: 38 × 2020 B reserved, 8,159 B forwarded
+PR #815 SQL replay 1: Safari=2,008,998 B, new credit=2,008,998 B
+PR #815 SQL replay 2: Safari=2,008,809 B, new credit=0 B
+PR #815 SQL replay 3: Safari=4,017,807 B, new credit=2,008,998 B

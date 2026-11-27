@@ -1,0 +1,36 @@
+{
+  "frame_fields": {
+    "allocation": 2048,
+    "headroom": 28,
+    "filled": 0,
+    "available": 2020
+  },
+  "length_samples": {
+    "network-udp": {
+      "reserved_frames": 32,
+      "reserved_bytes": 64640,
+      "forwarded_bytes": 4096,
+      "filter_callback_lengths": [
+        [
+          128,
+          0
+        ]
+      ]
+    },
+    "held-quic": {
+      "reserved_frames": 38,
+      "reserved_bytes": 76760,
+      "forwarded_bytes": 8159,
+      "filter_callback_lengths": [
+        [
+          1200,
+          0
+        ],
+        [
+          1200,
+          1200
+        ]
+      ]
+    }
+  }
+}

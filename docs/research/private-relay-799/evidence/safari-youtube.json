@@ -1,0 +1,307 @@
+{
+  "yt-relay-on-probe-off": {
+    "seconds": 35.03,
+    "cpu_seconds": 0.01,
+    "interface_delta": [
+      8938078,
+      288216
+    ],
+    "webkit": {
+      "external": [
+        [
+          16,
+          10356
+        ]
+      ],
+      "all": [
+        [
+          14624,
+          10432
+        ]
+      ]
+    },
+    "safari_flow_totals": [],
+    "same_safari_process": null,
+    "same_filter_process": null
+  },
+  "yt-relay-on-probe-on": {
+    "seconds": 35.03,
+    "cpu_seconds": 0.02,
+    "interface_delta": [
+      20542830,
+      321741
+    ],
+    "webkit": {
+      "external": [
+        [
+          16,
+          674
+        ]
+      ],
+      "all": [
+        [
+          16,
+          674
+        ]
+      ]
+    },
+    "safari_flow_totals": [
+      {
+        "in": 6801,
+        "out": 4847,
+        "closed": false
+      },
+      {
+        "in": 0,
+        "out": 0,
+        "closed": true
+      }
+    ],
+    "same_safari_process": null,
+    "same_filter_process": null
+  },
+  "yt-relay-off-probe-on": {
+    "seconds": 35.02,
+    "cpu_seconds": 0.01,
+    "interface_delta": [
+      8960346,
+      366482
+    ],
+    "webkit": {
+      "external": [
+        [
+          7657618,
+          19142
+        ]
+      ],
+      "all": [
+        [
+          7657618,
+          19142
+        ]
+      ]
+    },
+    "safari_flow_totals": [
+      {
+        "in": 7761266,
+        "out": 660540,
+        "closed": false
+      },
+      {
+        "in": 0,
+        "out": 0,
+        "closed": true
+      }
+    ],
+    "same_safari_process": null,
+    "same_filter_process": null
+  },
+  "fresh-relay-on-probe-on": {
+    "seconds": 45.08,
+    "cpu_seconds": 0.15,
+    "interface_delta": [
+      33815645,
+      1514679
+    ],
+    "webkit": {
+      "external": [
+        [
+          909271,
+          209428
+        ]
+      ],
+      "all": [
+        [
+          909271,
+          209428
+        ]
+      ]
+    },
+    "safari_flow_totals": [
+      {
+        "in": 21121268,
+        "out": 12683,
+        "closed": true
+      },
+      {
+        "in": 724410,
+        "out": 158231,
+        "closed": true
+      },
+      {
+        "in": 581718,
+        "out": 3494,
+        "closed": true
+      },
+      {
+        "in": 403352,
+        "out": 3427,
+        "closed": true
+      },
+      {
+        "in": 384001,
+        "out": 2124,
+        "closed": true
+      },
+      {
+        "in": 256258,
+        "out": 2883,
+        "closed": true
+      },
+      {
+        "in": 229057,
+        "out": 2702,
+        "closed": true
+      },
+      {
+        "in": 215415,
+        "out": 2197,
+        "closed": true
+      },
+      {
+        "in": 165000,
+        "out": 2384,
+        "closed": true
+      },
+      {
+        "in": 164067,
+        "out": 2402,
+        "closed": true
+      },
+      {
+        "in": 161224,
+        "out": 2490,
+        "closed": true
+      },
+      {
+        "in": 156527,
+        "out": 2311,
+        "closed": true
+      }
+    ],
+    "same_safari_process": null,
+    "same_filter_process": null
+  },
+  "fresh-relay-off-probe-on": {
+    "seconds": 45.01,
+    "cpu_seconds": 0.25,
+    "interface_delta": [
+      42138131,
+      1528719
+    ],
+    "webkit": {
+      "external": [
+        [
+          37739546,
+          1012428
+        ]
+      ],
+      "all": [
+        [
+          37739546,
+          1012428
+        ]
+      ]
+    },
+    "safari_flow_totals": [
+      {
+        "in": 23591161,
+        "out": 1850320,
+        "closed": true
+      },
+      {
+        "in": 2423871,
+        "out": 6837,
+        "closed": true
+      },
+      {
+        "in": 1199422,
+        "out": 2340,
+        "closed": true
+      },
+      {
+        "in": 1199403,
+        "out": 2443,
+        "closed": true
+      },
+      {
+        "in": 772623,
+        "out": 2181,
+        "closed": true
+      },
+      {
+        "in": 755487,
+        "out": 136071,
+        "closed": true
+      },
+      {
+        "in": 738186,
+        "out": 2430,
+        "closed": true
+      },
+      {
+        "in": 714735,
+        "out": 2136,
+        "closed": true
+      },
+      {
+        "in": 352246,
+        "out": 2430,
+        "closed": true
+      },
+      {
+        "in": 296538,
+        "out": 2118,
+        "closed": true
+      },
+      {
+        "in": 266184,
+        "out": 2274,
+        "closed": true
+      },
+      {
+        "in": 265961,
+        "out": 2274,
+        "closed": true
+      }
+    ],
+    "same_safari_process": null,
+    "same_filter_process": null
+  },
+  "warm-relay-on-probe-on": {
+    "seconds": 45.02,
+    "cpu_seconds": 0.01,
+    "interface_delta": [
+      23801914,
+      346041
+    ],
+    "webkit": {
+      "external": [
+        [
+          45,
+          296
+        ]
+      ],
+      "all": [
+        [
+          45,
+          296
+        ]
+      ]
+    },
+    "safari_flow_totals": [
+      {
+        "in": 20645758,
+        "out": 16967,
+        "closed": false
+      },
+      {
+        "in": 0,
+        "out": 0,
+        "closed": true
+      }
+    ],
+    "same_safari_process": true,
+    "same_filter_process": true
+  }
+}

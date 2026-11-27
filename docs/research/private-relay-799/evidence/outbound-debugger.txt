@@ -1,0 +1,15 @@
+Selected macOS 26.7.3 arm64 debugger observations. Symbols and relative instruction offsets retained. Paths, arguments, process IDs and memory addresses omitted.
+
+Command (target was the test Network.framework sender):
+(lldb) breakpoint set --skip-prologue false -n ne_filter_protocol_get_output_frames -s libnetworkextension.dylib
+
+Saved breakpoint output:
+FRAME FIELDS 2048 28 0 available 2020
+
+The fields are allocation, headroom and bytes already filled. The captured writer calls nw_frame_array_unclaimed_length and adds its result to the counter. The relevant instruction sequence from the saved disassembly:
+
+<+420>: bl      <address>   ; symbol stub for: nw_frame_array_unclaimed_length
+<+432>: mov     w9, w0
+<+436>: ldaddal x9, x8, [x8]
+
+The forwarded lengths were recorded separately from reservations. See outbound-debugger.json for the two debugger-run aggregates and first observed callback lengths. See vps-runs.json for the independent receiver measurements.
