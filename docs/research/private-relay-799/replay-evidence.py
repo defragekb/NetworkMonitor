@@ -88,11 +88,11 @@ def verify_safari():
     return replay_inputs
 
 
-def verify_vps():
+def verify_outbound_counter():
     expected = ((4096, 4096), (4096, 64640), (32768, 32768),
                 (32768, 64640), (8167, 76760), (4787, 4787))
     actual = []
-    for row in load("vps-runs.json")["same_route"]:
+    for row in load("udp-quic-runs.json")["same_route"]:
         payload = row["receiver"]["payload_bytes"]
         reports = row["filter_reports"]
         assert len(reports) == 1 and reports[0][-1][0] == "close"
@@ -142,6 +142,6 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--usage-history", type=Path, help="Sources/NetworkMonitorCore/UsageHistory.swift from PR #815")
 args = parser.parse_args()
 inputs = verify_safari()
-verify_vps()
+verify_outbound_counter()
 if args.usage_history:
     replay_usage_history(args.usage_history, inputs)

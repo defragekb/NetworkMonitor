@@ -1,5 +1,5 @@
 {
-  "yt-relay-on-probe-off": {
+  "initial-relay-probe-off": {
     "seconds": 35.03,
     "cpu_seconds": 0.01,
     "interface_delta": [
@@ -20,11 +20,9 @@
         ]
       ]
     },
-    "safari_flow_totals": [],
-    "same_safari_process": null,
-    "same_filter_process": null
+    "safari_flow_totals": []
   },
-  "yt-relay-on-probe-on": {
+  "initial-relay-probe-on": {
     "seconds": 35.03,
     "cpu_seconds": 0.02,
     "interface_delta": [
@@ -56,11 +54,9 @@
         "out": 0,
         "closed": true
       }
-    ],
-    "same_safari_process": null,
-    "same_filter_process": null
+    ]
   },
-  "yt-relay-off-probe-on": {
+  "initial-direct-probe-on": {
     "seconds": 35.02,
     "cpu_seconds": 0.01,
     "interface_delta": [
@@ -92,11 +88,9 @@
         "out": 0,
         "closed": true
       }
-    ],
-    "same_safari_process": null,
-    "same_filter_process": null
+    ]
   },
-  "fresh-relay-on-probe-on": {
+  "fresh-relay-probe-on": {
     "seconds": 45.08,
     "cpu_seconds": 0.15,
     "interface_delta": [
@@ -178,11 +172,9 @@
         "out": 2311,
         "closed": true
       }
-    ],
-    "same_safari_process": null,
-    "same_filter_process": null
+    ]
   },
-  "fresh-relay-off-probe-on": {
+  "fresh-direct-probe-on": {
     "seconds": 45.01,
     "cpu_seconds": 0.25,
     "interface_delta": [
@@ -264,11 +256,9 @@
         "out": 2274,
         "closed": true
       }
-    ],
-    "same_safari_process": null,
-    "same_filter_process": null
+    ]
   },
-  "warm-relay-on-probe-on": {
+  "new-flow-relay-probe-on": {
     "seconds": 45.02,
     "cpu_seconds": 0.01,
     "interface_delta": [
@@ -300,8 +290,6 @@
         "out": 0,
         "closed": true
       }
-    ],
-    "same_safari_process": true,
-    "same_filter_process": true
+    ]
   }
 }

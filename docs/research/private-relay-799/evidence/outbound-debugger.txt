@@ -12,4 +12,4 @@ The fields are allocation, headroom and bytes already filled. The captured write
 <+432>: mov     w9, w0
 <+436>: ldaddal x9, x8, [x8]
 
-The forwarded lengths were recorded separately from reservations. See outbound-debugger.json for the two debugger-run aggregates and first observed callback lengths. See vps-runs.json for the independent receiver measurements.
+The forwarded lengths were recorded separately from reservations. See outbound-debugger.json for the two debugger-run aggregates and first observed callback lengths. See udp-quic-runs.json for the independent receiver measurements.

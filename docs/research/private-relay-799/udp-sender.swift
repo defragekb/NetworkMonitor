@@ -6,7 +6,7 @@ let arguments = CommandLine.arguments
 guard arguments.count == 5, let destination = IPv4Address(arguments[1]),
       let port = NWEndpoint.Port(arguments[2]), port.rawValue > 0, let size = Int(arguments[3]), [128, 1024].contains(size),
       arguments[4].count == 32 else {
-    fputs("usage: udp-sender VPS_IPV4 PORT {128|1024} TOKEN_HEX\n", stderr)
+    fputs("usage: udp-sender RECEIVER_IPV4 PORT {128|1024} TOKEN_HEX\n", stderr)
     exit(2)
 }
 

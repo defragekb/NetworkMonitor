@@ -1,14 +1,14 @@
 # Reproduce Private Relay and outbound UDP measurements
 
-This accompanies [NetworkMonitor #799](https://github.com/kevinabouhanna/NetworkMonitor/issues/799). The [signed Safari probe runs](https://github.com/kevinabouhanna/NetworkMonitor/issues/799#issuecomment-7203512579), [controlled downloads](https://github.com/kevinabouhanna/NetworkMonitor/issues/799#issuecomment-7219703646) and [external UDP and QUIC matrix](https://github.com/kevinabouhanna/NetworkMonitor/issues/799#issuecomment-7207173291) contain the measured results. The test scripts below accept your own endpoints and contain no captured traffic or test-machine identifiers.
+This accompanies [NetworkMonitor #799](https://github.com/kevinabouhanna/NetworkMonitor/issues/799). The [signed Safari probe runs](https://github.com/kevinabouhanna/NetworkMonitor/issues/799#issuecomment-7203512579), [controlled downloads](https://github.com/kevinabouhanna/NetworkMonitor/issues/799#issuecomment-7219703646) and [external UDP and QUIC matrix](https://github.com/kevinabouhanna/NetworkMonitor/issues/799#issuecomment-7207173291) contain the measured results. The test scripts below accept your own endpoints and use generic receiver and sender roles.
 
 Start with the [evidence and implementation map](evidence.md) for the investigation in order, the published captures and the one-command replay.
 
 ## Received bytes in Safari
 
 1. Enable NetworkMonitor's Content Filter. Use a signed build with `flowBytesProbe` for measurement, or the [receive accounting branch](https://github.com/defragekb/NetworkMonitor/tree/relay-download-799) to try Usage History.
-2. In a fresh Safari private window, open [the small test page](https://speed.cloudflare.com/robots.txt) and use the JavaScript Console to run `safari-download.js`. Set a fresh local salt in the script and reuse it for all four runs. The page retrieves two uncached 1,000,000-byte HTTPS responses. It keeps the payload in memory and reports the exact size.
-3. Compare the server's egress fingerprints locally before and after the transfer. For the direct control, choose **View → Reload and Show IP Address** in the test window. Close the window between runs. Keep the same site, payload and number of requests.
+2. In Safari, open [the HTTPS test page](https://speed.cloudflare.com/robots.txt) and use the JavaScript Console to run `safari-download.js`. Set a fresh local salt in the script and reuse it for all four runs. The page retrieves two uncached 1,000,000-byte HTTPS responses. It keeps the payload in memory and reports the exact size.
+3. Compare the server's egress fingerprints locally before and after the transfer. For the direct control, choose **View → Reload and Show IP Address** in the test window. Use a fresh connection for each run. Keep the payload and request count fixed.
 4. Measure with the diagnostic or implementation switch off and on, with Relay active and on the direct control. Restart NetworkMonitor after changing a switch. Use `nettop` in both modes and compare the Content Filter process CPU time from `ps -o time= -p <pid>` over equal windows. Keep only the deltas and allow time for a periodic report after the download.
 
 ```sh
@@ -26,22 +26,22 @@ For the receive implementation, use `relayDownloadAccounting` and compare the pe
 
 The smallest reproduction uses ordinary UDP in Apple's Network.framework. This exercises the same counter discrepancy observed with Network.framework QUIC. The original matrix also includes BSD UDP and OpenSSL QUIC as controls.
 
-Compile the sender on the Mac. Run the receiver on a test host you control with UDP/443 available. Address and token values below are placeholders. Pick a fresh token with `openssl rand -hex 16`. The receiver accepts 32 packets of the specified length from the specified source and replies only to matching packets. Start a new receiver for each size.
+Compile the Network.framework sender on macOS. Run the receiver on a controlled endpoint with UDP/443 available. Address and token values below are placeholders. Pick a fresh token with `openssl rand -hex 16`. The receiver accepts 32 packets of the specified length from the specified source and replies only to matching packets. Start a new receiver for each size.
 
 ```sh
 swiftc udp-sender.swift -o udp-sender
 ```
 
-On the receiver, where `CLIENT_IPV4` is the Mac's externally visible IPv4 address on this route:
+On the receiver, where `CLIENT_IPV4` is the sender's IPv4 address as seen by the receiver:
 
 ```sh
 sudo python3 udp-receiver.py CLIENT_IPV4 443 128 TOKEN_HEX
 ```
 
-On the Mac, where `VPS_IPV4` is the address of the test host:
+On the sender, where `RECEIVER_IPV4` is the receiver's address:
 
 ```sh
-./udp-sender VPS_IPV4 443 128 TOKEN_HEX
+./udp-sender RECEIVER_IPV4 443 128 TOKEN_HEX
 ```
 
 Repeat both commands with 1,024 bytes per packet (pass `1024` on the command line). Both the sender and receiver should print totals of 4,096 and 32,768 bytes respectively. In the reproduced signed beta the old filter counter reported 64,640 bytes for each flow.
