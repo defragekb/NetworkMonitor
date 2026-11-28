@@ -1,0 +1,20 @@
+{
+  "on": {
+    "bytes": 64000000,
+    "elapsed_seconds": 64.001,
+    "cpu_seconds": 0.05,
+    "timing_errors_ms": [
+      61,
+      22
+    ]
+  },
+  "off": {
+    "bytes": 64000000,
+    "elapsed_seconds": 64.001,
+    "cpu_seconds": 0.03,
+    "timing_errors_ms": [
+      -13,
+      129
+    ]
+  }
+}

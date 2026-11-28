@@ -1,0 +1,33 @@
+{
+  "route": "same direct route",
+  "protocol": "HTTP/1.1",
+  "flowBytesProbe": false,
+  "runs": {
+    "on": {
+      "bytes": 200000000,
+      "requests": 50,
+      "late": 0,
+      "wall_seconds": 100.0,
+      "cpu_seconds": 0.06,
+      "median_request_ms": 200,
+      "slowest_request_ms": 398,
+      "cpu_sample_offset_ms": [
+        33,
+        4
+      ]
+    },
+    "off": {
+      "bytes": 200000000,
+      "requests": 50,
+      "late": 0,
+      "wall_seconds": 100.001,
+      "cpu_seconds": 0.12,
+      "median_request_ms": 195,
+      "slowest_request_ms": 440,
+      "cpu_sample_offset_ms": [
+        29,
+        -85
+      ]
+    }
+  }
+}

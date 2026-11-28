@@ -1,0 +1,50 @@
+{
+  "build": "1.35.0-beta.5 (364.5)",
+  "os": "macOS 26.7.3 (25G342)",
+  "reproduction": {
+    "accounting_enabled": true,
+    "diagnostic_enabled": true,
+    "private_relay_enabled": true,
+    "per_flow_proxy_route_verified": false,
+    "history_window_within_one_hour_and_network_visit": true,
+    "observed_webkit_close_reports": [
+      {
+        "transport": "UDP/443",
+        "received_bytes": 9015817
+      },
+      {
+        "transport": "UDP/443",
+        "received_bytes": 5391644
+      },
+      {
+        "transport": "TCP/443",
+        "received_bytes": 6189883
+      }
+    ],
+    "deltas": {
+      "link_rx": 23838617,
+      "app_traffic": 6298521,
+      "history_app_traffic": 6298521,
+      "filter_downloads": 0,
+      "download_credit": 0
+    }
+  },
+  "direct_200mb_on": {
+    "link_rx": 213155072,
+    "app_traffic": 200380042,
+    "history_app_traffic": 200380042,
+    "filter_downloads": 200363761,
+    "download_credit": 0
+  },
+  "earlier_unmatched_200mb_off": {
+    "transport": "UDP/443",
+    "filter_received_bytes": 200298299,
+    "deltas": {
+      "link_rx": 213210240,
+      "app_traffic": 55045,
+      "history_app_traffic": 55045,
+      "filter_downloads": 0,
+      "download_credit": 0
+    }
+  }
+}

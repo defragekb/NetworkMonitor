@@ -1,0 +1,7 @@
+snapshot,row,received_bytes,sent_bytes
+udp-reproduction-hour-at-export,Safari,6353518,170367
+udp-reproduction-hour-at-export,Not attributed to an app,20016159,2518001
+udp-reproduction-hour-at-export,All apps and remainder,45467233,8543379
+direct-cpu-pair-hour,Safari,401764749,1814659
+direct-cpu-pair-hour,Not attributed to an app,22716593,3157115
+direct-cpu-pair-hour,All apps and remainder,446788077,12266523
